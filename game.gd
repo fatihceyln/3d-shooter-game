@@ -1,8 +1,19 @@
 extends Node3D
 
 @onready var score_label: Label = %ScoreLabel
+@onready var time_label: Label = %TimeLabel
+@onready var timer: Timer = %Timer
+@onready var game_over_layer: CanvasLayer = %GameOverLayer
 
 var player_score: int = 0
+var time_left: int = 10
+
+func _ready() -> void:
+	update_timer_label()
+
+
+func update_timer_label() -> void:
+		time_label.text = "Time left: " + str(time_left)
 
 
 func increase_score() -> void:
@@ -30,3 +41,11 @@ func _on_mob_spawner_mob_spawned(mob: Node3D) -> void:
 
 func _on_kill_zone_body_entered(_body: Node3D) -> void:
 	get_tree().reload_current_scene.call_deferred()
+
+
+func _on_timer_timeout() -> void:
+	time_left -= 1
+	update_timer_label()
+	if time_left == 0:
+		timer.stop()
+		game_over_layer.visible = true

@@ -10,6 +10,9 @@
 [sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
 font_size = 108
 
+[sub_resource type="LabelSettings" id="LabelSettings_ryrav"]
+font_size = 72
+
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_77xfu"]
 
 [sub_resource type="Environment" id="Environment_80nbo"]
@@ -23,6 +26,9 @@ fog_light_color = Color(0.17600575, 0.58055717, 0.86712825, 1)
 fog_density = 0.0
 fog_height_density = 0.35
 
+[sub_resource type="LabelSettings" id="LabelSettings_eow3j"]
+font_size = 80
+
 [node name="Game" type="Node3D" unique_id=1551104649]
 script = ExtResource("1_ryrav")
 
@@ -34,6 +40,21 @@ offset_right = 459.0002
 offset_bottom = 185.0
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_7jktm")
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1462855397]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -708.0
+offset_top = 47.0
+offset_right = -40.0
+offset_bottom = 346.0
+grow_horizontal = 0
+text = "Time Left: 10
+"
+label_settings = SubResource("LabelSettings_ryrav")
+horizontal_alignment = 2
 
 [node name="MobSpawner" parent="." unique_id=1313419573 instance=ExtResource("2_fc0e3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -13)
@@ -150,6 +171,38 @@ use_collision = true
 size = Vector3(2, 1, 6)
 material = ExtResource("2_feb5d")
 
+[node name="Timer" type="Timer" parent="." unique_id=1403055959]
+unique_name_in_owner = true
+autostart = true
+
+[node name="GameOverLayer" type="CanvasLayer" parent="." unique_id=19892700]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOverLayer" unique_id=217517783]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.12156863)
+
+[node name="Label" type="Label" parent="GameOverLayer" unique_id=1629638073]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -101.5
+offset_top = -11.5
+offset_right = 101.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Congratulations, you won!"
+label_settings = SubResource("LabelSettings_eow3j")
+
 [connection signal="mob_spawned" from="MobSpawner" to="." method="_on_mob_spawner_mob_spawned"]
 [connection signal="mob_spawned" from="MobSpawner2" to="." method="_on_mob_spawner_mob_spawned"]
 [connection signal="body_entered" from="KillZone" to="." method="_on_kill_zone_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
