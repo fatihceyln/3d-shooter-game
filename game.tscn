@@ -1,0 +1,155 @@
+[gd_scene format=3 uid="uid://cklphfqo4p72r"]
+
+[ext_resource type="PackedScene" uid="uid://bvg5nfvxcxg1m" path="res://player/player.tscn" id="1_80nbo"]
+[ext_resource type="Material" uid="uid://dajom0o8rjsru" path="res://level/platform.tres" id="1_feb5d"]
+[ext_resource type="Script" uid="uid://crjt2cdrrv0bt" path="res://game.gd" id="1_ryrav"]
+[ext_resource type="PackedScene" uid="uid://c437oicjhb6me" path="res://mob/spawner/mob_spawner.tscn" id="2_fc0e3"]
+[ext_resource type="Material" uid="uid://bbyfe51ab7yvg" path="res://level/bridge.tres" id="2_feb5d"]
+[ext_resource type="PackedScene" uid="uid://quloth6crbmq" path="res://mob/bat/mob.tscn" id="4_fc0e3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_7jktm"]
+font_size = 108
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_77xfu"]
+
+[sub_resource type="Environment" id="Environment_80nbo"]
+background_mode = 1
+background_color = Color(0.035960987, 0.6575807, 0.8472809, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.84232247, 0.7203944, 0.6467709, 1)
+tonemap_mode = 2
+fog_enabled = true
+fog_light_color = Color(0.17600575, 0.58055717, 0.86712825, 1)
+fog_density = 0.0
+fog_height_density = 0.35
+
+[node name="Game" type="Node3D" unique_id=1551104649]
+script = ExtResource("1_ryrav")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1444991024]
+unique_name_in_owner = true
+offset_left = 52.0
+offset_top = 37.0
+offset_right = 459.0002
+offset_bottom = 185.0
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_7jktm")
+
+[node name="MobSpawner" parent="." unique_id=1313419573 instance=ExtResource("2_fc0e3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -13)
+mob_to_spawn = ExtResource("4_fc0e3")
+
+[node name="MobSpawner2" parent="." unique_id=1911556490 instance=ExtResource("2_fc0e3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 10)
+mob_to_spawn = ExtResource("4_fc0e3")
+
+[node name="KillZone" type="Area3D" parent="." unique_id=223433188]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+collision_layer = 0
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KillZone" unique_id=944593860]
+shape = SubResource("WorldBoundaryShape3D_77xfu")
+debug_color = Color(0.6269053, 0.008815966, 0.2838517, 1)
+
+[node name="Player" parent="." unique_id=906000833 instance=ExtResource("1_80nbo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 11)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1747575484]
+transform = Transform3D(0.96971846, -0.10218716, 0.22181964, -0.09319969, 0.6846852, 0.7228553, -0.22574317, -0.7216397, 0.65442806, 0.5554169, 5.065432, 2.358874)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1085668127]
+environment = SubResource("Environment_80nbo")
+
+[node name="Platforms" type="Node" parent="." unique_id=897957739]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Platforms" unique_id=237977905]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -5.1, 10)
+use_collision = true
+size = Vector3(10, 10, 10)
+material = ExtResource("1_feb5d")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Platforms" unique_id=1994877025]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, -5.1, -14)
+use_collision = true
+size = Vector3(7, 10, 8)
+material = ExtResource("1_feb5d")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Platforms" unique_id=311114990]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5, -5.1, 9)
+use_collision = true
+size = Vector3(7, 10, 8)
+material = ExtResource("1_feb5d")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Platforms" unique_id=2129169075]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -5.1, -14)
+use_collision = true
+size = Vector3(8, 10, 10)
+material = ExtResource("1_feb5d")
+
+[node name="Bridges" type="Node" parent="." unique_id=1995284484]
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Bridges" unique_id=2133824258]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11, 0.4000001, -15)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Bridges" unique_id=961953482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0.4000001, -15)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Bridges" unique_id=851244867]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5999999, -6)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Bridges" unique_id=1553596895]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, -0.5999999, 1.5)
+use_collision = true
+size = Vector3(2, 1, 7)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Bridges" unique_id=1288296929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, -0.5999999, 9.5)
+use_collision = true
+size = Vector3(2, 1, 5)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Bridges" unique_id=1316986769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, -0.5999999, 9.5)
+use_collision = true
+size = Vector3(2, 1, 5)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Bridges" unique_id=253145887]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, -0.5999999, 9.5)
+use_collision = true
+size = Vector3(2, 1, 5)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Bridges" unique_id=1919253942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, -0.5999999, -7)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Bridges" unique_id=988210593]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 17, -0.5999999, 4)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Bridges" unique_id=266924939]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 16.999998, -0.5999999, 0)
+use_collision = true
+size = Vector3(2, 1, 6)
+material = ExtResource("2_feb5d")
+
+[connection signal="mob_spawned" from="MobSpawner" to="." method="_on_mob_spawner_mob_spawned"]
+[connection signal="mob_spawned" from="MobSpawner2" to="." method="_on_mob_spawner_mob_spawned"]
+[connection signal="body_entered" from="KillZone" to="." method="_on_kill_zone_body_entered"]

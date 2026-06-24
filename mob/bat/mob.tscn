@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://quloth6crbmq"]
+
+[ext_resource type="Script" uid="uid://ce5ioo2u1b1kx" path="res://mob/bat/mob.gd" id="1_ih2ng"]
+[ext_resource type="PackedScene" uid="uid://cuuo85e22et6t" path="res://mob/bat/bat_model.tscn" id="1_pgttr"]
+[ext_resource type="AudioStream" uid="uid://cr5xbec6knqya" path="res://mob/mob_take_damage.wav" id="3_llldc"]
+[ext_resource type="AudioStream" uid="uid://cmfxgwslralir" path="res://mob/mob_ko.wav" id="4_g7bq0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nwg14"]
+radius = 0.35
+
+[node name="Mob" type="RigidBody3D" unique_id=1027351599]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25779784, 0)
+collision_layer = 2
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_ih2ng")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1120030345]
+shape = SubResource("SphereShape3D_nwg14")
+debug_color = Color(0, 0.6, 0.69803923, 1)
+
+[node name="BatModel" parent="." unique_id=1556057234 instance=ExtResource("1_pgttr")]
+unique_name_in_owner = true
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=189594719]
+unique_name_in_owner = true
+wait_time = 2.0
+one_shot = true
+
+[node name="HurtSound" type="AudioStreamPlayer3D" parent="." unique_id=1521033278]
+unique_name_in_owner = true
+stream = ExtResource("3_llldc")
+volume_db = -8.0
+
+[node name="DeathSound" type="AudioStreamPlayer3D" parent="." unique_id=2051279089]
+unique_name_in_owner = true
+stream = ExtResource("4_g7bq0")
+volume_db = -8.0
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

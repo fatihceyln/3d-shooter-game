@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://bvg5nfvxcxg1m"]
+
+[ext_resource type="PackedScene" uid="uid://d2o8u15kfxfvd" path="res://player/simple_gun/gun_model.glb" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://c5uy5ytqwfkk4" path="res://player/player.gd" id="1_rkbax"]
+[ext_resource type="Texture2D" uid="uid://bxrr0l4w3xruf" path="res://player/reticle.png" id="3_g1dw6"]
+[ext_resource type="AudioStream" uid="uid://boejnwysrd8lo" path="res://player/gun_shoot.wav" id="4_yw30f"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kqu6x"]
+
+[node name="Player" type="CharacterBody3D" unique_id=906000833]
+collision_mask = 3
+script = ExtResource("1_rkbax")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=435197215]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_kqu6x")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1833299980]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.550051, 0)
+
+[node name="gun_model" parent="Camera3D" unique_id=1423472158 instance=ExtResource("1_oul6g")]
+transform = Transform3D(-0.39784446, 0, -0.08117383, 0, 0.40604115, 0, 0.08117383, 0, -0.39784446, 0.45714277, -0.21804011, -0.5781355)
+
+[node name="Marker3D" type="Marker3D" parent="Camera3D" unique_id=1206636763]
+unique_name_in_owner = true
+transform = Transform3D(0.99877363, 0, 0.04951219, 0, 1, 0, -0.04951219, 0, 0.99877363, 0.40768358, -0.13893545, -0.81552553)
+
+[node name="Reticle" type="TextureRect" parent="." unique_id=1222453599]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_g1dw6")
+expand_mode = 1
+
+[node name="CooldownTimer" type="Timer" parent="." unique_id=609286189]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=821714733]
+unique_name_in_owner = true
+stream = ExtResource("4_yw30f")
