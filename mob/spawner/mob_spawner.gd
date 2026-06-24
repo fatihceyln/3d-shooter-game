@@ -1,4 +1,5 @@
 extends Node3D
+class_name MobSpawner
 
 signal mob_spawned(mob: Node3D)
 
@@ -6,6 +7,10 @@ signal mob_spawned(mob: Node3D)
 
 @onready var marker: Marker3D = %Marker3D
 @onready var timer: Timer = %Timer
+
+
+func stop_spawning() -> void:
+	timer.stop()
 
 
 func _on_timer_timeout() -> void:

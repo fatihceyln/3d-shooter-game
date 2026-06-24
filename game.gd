@@ -8,8 +8,17 @@ extends Node3D
 var player_score: int = 0
 var time_left: int = 10
 
+var mob_spawners: Array[MobSpawner] = []
+
 func _ready() -> void:
 	update_timer_label()
+	find_mob_spawners()
+
+
+func find_mob_spawners():
+	for child in get_children():
+		if child is MobSpawner:
+			mob_spawners.append(child)
 
 
 func update_timer_label() -> void:
@@ -46,6 +55,9 @@ func _on_kill_zone_body_entered(_body: Node3D) -> void:
 func _on_timer_timeout() -> void:
 	time_left -= 1
 	update_timer_label()
+	
 	if time_left == 0:
 		timer.stop()
 		game_over_layer.visible = true
+		for mob_spawner in mob_spawners:
+			mob_spawner.stop_spawning()
